@@ -30,7 +30,7 @@ def move(publisher, speed, angular_speed,distance, is_forward):
         global x, y
         x0=x
         y0=y
-
+        
         if (is_forward):
             velocity_message.linear.x =abs(speed)
         else:velocity_message.linear.x =-abs(speed)
@@ -74,8 +74,6 @@ def rotate (publisher, angular_speed_degree, relative_angle_degree, clockwise):
 
     angle_moved = 0.0
     loop_rate = rospy.Rate(10) # we publish the velocity at 10 Hz (10 times a second)    
-    cmd_vel_topic='/turtle1/cmd_vel'
-    publisher = rospy.Publisher(cmd_vel_topic, Twist, queue_size=10)
 
     t0 = rospy.Time.now().to_sec()
 
@@ -86,9 +84,7 @@ def rotate (publisher, angular_speed_degree, relative_angle_degree, clockwise):
         t1 = rospy.Time.now().to_sec()
         current_angle_degree = (t1-t0)*angular_speed_degree
         loop_rate.sleep()
-
-
-                       
+            
         if  (current_angle_degree>relative_angle_degree):
             rospy.loginfo("reached")
             break
