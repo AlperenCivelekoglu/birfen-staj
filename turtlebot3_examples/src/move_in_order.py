@@ -6,6 +6,7 @@ from math import radians, degrees
 from actionlib_msgs.msg import *
 from geometry_msgs.msg import Point
 
+destinations = []
 #this method will make the robot move to the goal location
 def move_to_goal(xGoal,yGoal):
 
@@ -43,13 +44,17 @@ def move_to_goal(xGoal,yGoal):
    else:
            rospy.loginfo("The robot failed to reach the destination")
            return False
-
+   
 if __name__ == '__main__':
    rospy.init_node('map_navigation', anonymous=False)
 
-   rospy.loginfo("Please type goal coordinates x_goal, y_goal")
-   x_goal, y_goal = map(float, input().split())
+   for sayi in range(1,4):
+        rospy.loginfo("Please type goal coordinates x_goal_, y_goal_")
+        x_goal, y_goal = input().split()
+        destinations[sayi-1] = [x_goal,y_goal]
+    
 
-   print('start go to goal')
-   move_to_goal(x_goal,y_goal)
+   for goal in destinations:
+        print('start go to goal {}'.format(goal))
+        move_to_goal(destinations[goal[0],goal[1]])
    rospy.spin()
